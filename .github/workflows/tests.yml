@@ -1,0 +1,59 @@
+name: tests
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  pytest:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python: [3.8]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: x64
+      - name: Cache python modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-python-${{ matrix.python }}-${{ hashFiles('pyproject.toml') }}-test
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]" --upgrade
+      - name: Run unittests
+        run: |
+          coverage run -m pytest tests/
+          coverage xml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-main
+          path: ./coverage.xml
+
+  headers:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Check the headers
+        uses: frgfm/validate-python-headers@main
+        with:
+          license: 'Apache-2.0'
+          owner: 'Quack AI'
+          starting-year: 2023
+          folders: 'my_lib,docs,.github'
+          ignore-files: 'version.py,__init__.py'
