@@ -55,5 +55,5 @@ jobs:
           license: 'Apache-2.0'
           owner: 'Quack AI'
           starting-year: 2023
-          folders: 'my_lib,docs,.github'
+          folders: 'my_lib,.github'
           ignore-files: 'version.py,__init__.py'
