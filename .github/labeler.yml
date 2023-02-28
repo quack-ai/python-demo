@@ -1,0 +1,30 @@
+'ext: docs':
+- docs/*
+
+'ext: demo':
+- demo/*
+
+'ext: tests':
+- tests/*
+
+'module: core':
+- my_lib/*
+
+'topic: build':
+- setup.py
+- pyproject.toml
+
+'topic: docker':
+- Dockerfile
+
+'topic: ci':
+- .github/*
+
+'topic: documentation':
+- README.md
+- CONTRIBUTING.md
+- CODE_OF_CONDUCT.md
+
+'type: code quality':
+- .flake8
+- pre-commit-config.yaml
