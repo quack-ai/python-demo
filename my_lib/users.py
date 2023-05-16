@@ -3,6 +3,9 @@
 # This program is licensed under the Apache License 2.0.
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.
 
+from datetime import datetime
+from typing import Any, Dict, List
+
 __all__ = ["greet_contributor", "process_table"]
 
 
@@ -30,7 +33,7 @@ def validate_user_info(user_info: Dict[str, Any]) -> bool:
     if any(key not in user_info for key in {"created_at", "updated_at", "name"}):
         return False
     # Check datetime
-    if user_info["created_at"] > user_info["last_updated"] or user_info["last_updated"] > datetime.utcnow().isoformat():
+    if user_info["created_at"] > user_info["updated_at"] or user_info["updated_at"] > datetime.utcnow().isoformat():
         return False
     # Check identity
     if len(user_info["name"]) < 5:
