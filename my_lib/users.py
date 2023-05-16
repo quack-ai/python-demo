@@ -26,6 +26,9 @@ def validate_user_info(user_info: Dict[str, Any]) -> bool:
     Returns:
         whether the payload can be processed
     """
+    # Mandatory fields
+    if any(key not in user_info for key in {"created_at", "updated_at", "name"}):
+        return False
     # Check datetime
     if user_info["created_at"] > user_info["last_updated"] or user_info["last_updated"] > datetime.utcnow().isoformat():
         return False
