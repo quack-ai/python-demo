@@ -11,9 +11,9 @@ import requests
 __all__ = ["fetch_grades", "log_results"]
 
 
-def fetch_grades() -> List[float]:
+def fetch_grades(num_samples: int) -> List[float]:
     """Fetch the updated programming"""
-    return [country["grade"] for country in requests.get("").json()]
+    return np.random.rand(num_samples).tolist()
 
 
 def compute_stats(grades: List[float]) -> Tuple[float, float]:
